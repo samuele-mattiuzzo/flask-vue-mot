@@ -3,7 +3,7 @@ import os
 import urllib
 
 from dotenv import load_dotenv
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, request
 from flask_cors import CORS
 
 load_dotenv()
@@ -17,12 +17,6 @@ app.config.from_object(__name__)
 
 # enable CORS
 CORS(app, resources={r'/*': {'origins': '*'}})
-
-
-# sanity check route
-@app.route('/ping', methods=['GET'])
-def ping_pong():
-    return jsonify('pong!')
 
 
 @app.route('/mot', methods=['GET'])
@@ -40,8 +34,6 @@ def get_mot():
     data = response.read()
 
     return json.loads(data)[0]
-
-    # return render_template("mot.html", details=dict["results"])
 
 
 if __name__ == '__main__':
