@@ -3,7 +3,7 @@ import os
 import urllib
 
 from dotenv import load_dotenv
-from flask import Flask, request
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 load_dotenv()
@@ -22,6 +22,11 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 @app.route('/mot', methods=['GET'])
 def get_mot():
     registration = request.args.get('reg')
+    if registration == '':
+        return jsonify(
+            {'error': 'Please specify a reg number'}
+        )
+
     url = "https://beta.check-mot.service.gov.uk/trade/vehicles/mot-tests?registration={}".format(
         registration
     )
@@ -30,10 +35,14 @@ def get_mot():
     rq.add_header('x-api-key', os.getenv('API_KEY'))
     rq.add_header('Accept', 'application/json+v6')
 
-    response = urllib.request.urlopen(rq)
-    data = response.read()
-
-    return json.loads(data)[0]
+    try:
+        response = urllib.request.urlopen(rq)
+        data = response.read()
+        return json.loads(data)[0]
+    except urllib.error.HTTPError as e:
+        return jsonify(
+            {'error': 'The registration is invalid or cannot be found'}
+        )
 
 
 if __name__ == '__main__':
