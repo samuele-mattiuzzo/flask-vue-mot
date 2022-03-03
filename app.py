@@ -19,7 +19,7 @@ app.config.from_object(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
 
-@app.route('/mot', methods=['GET'])
+@app.route('/', methods=['GET'])
 def get_mot():
     registration = request.args.get('reg')
     if registration == '':
@@ -27,7 +27,9 @@ def get_mot():
             {'error': 'Please specify a reg number'}
         )
 
-    url = "https://beta.check-mot.service.gov.uk/trade/vehicles/mot-tests?registration={}".format(
+    url = "{}{}{}".format(
+        os.getenv('BASE_API_URL'),
+        os.getenv('MOT_TESTS_API_URL'),
         registration
     )
 
