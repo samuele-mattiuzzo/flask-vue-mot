@@ -45,5 +45,4 @@
 
 ## Tests
 
-- cd into the project directory
-- run `pytest` to run the entire test suite (tests are available under `/tests`)
+- `$ python3 tests.py`
