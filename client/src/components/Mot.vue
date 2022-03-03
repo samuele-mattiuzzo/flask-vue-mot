@@ -32,7 +32,10 @@
         </table>
 
         <br><br>
-        <h3>Mot history ({{ details.motTests.length }} results)</h3>
+        <h3>Mot history
+          (fails {{ details.motTests.filter(x => x.testResult === 'FAILED').length }}
+          / {{ details.motTests.length }})
+        </h3>
 
         <table class="table">
           <thead>
@@ -68,7 +71,7 @@ export default {
   methods: {
     getDetails() {
       const { reg } = this.$route.query;
-      const path = `http://localhost:5000/mot?reg=${reg}`;
+      const path = `http://localhost:5000/?reg=${reg}`;
       axios.get(path)
         .then((res) => {
           if (res.data.error) {
