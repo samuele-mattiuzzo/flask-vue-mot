@@ -24,6 +24,15 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
+    - name: Create .env file
+      uses: SpicyPizza/create-envfile@v1.3
+      with:
+        envkey_BASE_API_URL: "https://beta.check-mot.service.gov.uk/trade/vehicles/"
+        envkey_MOT_TESTS_API_URL: "mot-tests?registration="
+        envkey_API_KEY: "testapikey"
+        directory: .
+        file_name: .env
+        fail_on_empty: false
     - name: Run tests
       run: |
         python tests.py
