@@ -22,10 +22,6 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 @app.route('/', methods=['GET'])
 def get_mot():
     registration = request.args.get('reg')
-    if registration == '':
-        return jsonify(
-            {'error': 'Please specify a reg number'}
-        )
 
     url = "{}{}{}".format(
         os.getenv('BASE_API_URL'),

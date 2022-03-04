@@ -62,17 +62,6 @@ class TestUrlopen(unittest.TestCase):
             'ZZ99ABC')
 
     @ patch('urllib.request.urlopen')
-    def test_no_registration_returns_error_message(self, mock_urlopen):
-        # Mocking access to Web API
-        mock_urlopen().read.return_value = json.dumps(make_api_response(''))
-
-        response = self.client.get(BASE_URL+'')
-        self.assertEqual(response.status, '200 OK')
-        self.assertEqual(
-            json.loads(response.data)['error'],
-            'Please specify a reg number')
-
-    @ patch('urllib.request.urlopen')
     def test_invalid_registration_returns_error_message(self, mock_urlopen):
         # Mocking access to Web API
         mock_urlopen().read.side_effect = make_api_response('FAFAFA')
