@@ -11,8 +11,7 @@
 - The client is instead a vuejs app, where the main component is found in [client/src/components/Mot.vue](https://github.com/samuele-mattiuzzo/flask-vue-mot/blob/master/client/src/components/Mot.vue)
 - The client uses [axios](https://www.npmjs.com/package/axios) to fire a request to the server, which in turn interrogates the MOT API endpoint using [requests](https://docs.python-requests.org/en/latest/)
 - The server will always return a `200 OK` status code, even in case of empty or invalid registration number, so it can fail gracefully with a descriptive error message
-- To use the app, simply visit `http://localhost:8080/?reg=abc123` where `abc123` is instead the registration number of the vehicle that you want to check
-- At the time of writing, there is no input-form to perform a request, so the url needs modifying manually instead.
+- To use the app, simply visit `http://localhost:8080` and type the registration number of the vehicle that you want to check
 
 ## Setup
 
@@ -49,7 +48,7 @@
     - `$ cd client`
     - `$ npm run serve`
 
-- open your browser at `http://localhost:8080/mot?reg=<your reg number>`
+- open your browser at `http://localhost:8080`
 
 ## Tests
 
