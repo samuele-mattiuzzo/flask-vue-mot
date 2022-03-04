@@ -1,11 +1,18 @@
 <template>
   <div class="container">
-    <div class="row text-center" v-if="error">
-      <h1 class="text-danger">{{ error }}</h1>
-      <h3>Add "/?reg=YourRegNumber" to the url and try again</h3>
+    <div class="row justify-content-md-center text-center form-group mb-2 pb-4">
+      <div class="field col-4">
+        <label class="label text-uppercase"><strong>Reg. Number</strong></label>
+        <div class="control">
+          <input v-model="form.reg" v-on:change="getDetails()"
+                 class="form-control" type="text" placeholder="Registration number">
+          <span v-if="error" class="help-block text-danger">{{ error }}</span>
+        </div>
+      </div>
     </div>
+
     <div class="row text-center" v-if="details">
-      <div class="col-sm-10">
+      <div class="col-sm-12">
         <table class="table">
           <thead class="thead-dark">
             <tr>
@@ -64,20 +71,24 @@ export default {
   name: 'Mot',
   data() {
     return {
+      form: {
+        reg: '',
+      },
       details: '',
       error: '',
     };
   },
   methods: {
     getDetails() {
-      const { reg } = this.$route.query;
-      const path = `http://localhost:5000/?reg=${reg}`;
+      const path = `http://localhost:5000/?reg=${this.form.reg}`;
       axios.get(path)
         .then((res) => {
           if (res.data.error) {
             this.error = res.data.error;
+            this.details = '';
           } else {
             this.details = res.data;
+            this.error = '';
           }
         })
         .catch((error) => {
@@ -85,9 +96,6 @@ export default {
           console.error(error);
         });
     },
-  },
-  created() {
-    this.getDetails();
   },
 };
 </script>
